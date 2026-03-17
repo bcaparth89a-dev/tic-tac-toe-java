@@ -17,14 +17,11 @@ public class AIPlayer {
                     board[i][j] = ' ';
 
                     if(score > bestScore){
-
                         bestScore = score;
                         move[0] = i;
                         move[1] = j;
-
                     }
                 }
-
             }
         }
 
@@ -35,57 +32,46 @@ public class AIPlayer {
 
         char winner = GameLogic.checkWinner(board);
 
-        if(winner == 'O') return 10;
-        if(winner == 'X') return -10;
-
+        if(winner=='O') return 10;
+        if(winner=='X') return -10;
         if(GameLogic.isBoardFull(board)) return 0;
 
         if(isMax){
 
-            int bestScore = Integer.MIN_VALUE;
+            int best = Integer.MIN_VALUE;
 
             for(int i=0;i<3;i++){
                 for(int j=0;j<3;j++){
 
                     if(board[i][j]==' '){
 
-                        board[i][j] = 'O';
-
-                        int score = minimax(board,false);
-
-                        board[i][j] = ' ';
-
-                        bestScore = Math.max(score,bestScore);
-
+                        board[i][j]='O';
+                        best = Math.max(best,minimax(board,false));
+                        board[i][j]=' ';
                     }
                 }
             }
 
-            return bestScore;
+            return best;
         }
 
         else{
 
-            int bestScore = Integer.MAX_VALUE;
+            int best = Integer.MAX_VALUE;
 
             for(int i=0;i<3;i++){
                 for(int j=0;j<3;j++){
 
                     if(board[i][j]==' '){
 
-                        board[i][j] = 'X';
-
-                        int score = minimax(board,true);
-
-                        board[i][j] = ' ';
-
-                        bestScore = Math.min(score,bestScore);
-
+                        board[i][j]='X';
+                        best = Math.min(best,minimax(board,true));
+                        board[i][j]=' ';
                     }
                 }
             }
 
-            return bestScore;
+            return best;
         }
     }
 }
